@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
+project(exec_engine_comparison)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "/usr/lib/x86_64-linux-gnu/cmake")
+
 if(UNIX AND NOT APPLE)
   set(LINUX true)
 else()
@@ -7,8 +10,8 @@ else()
 endif()
 
 if(LINUX)
-set(CMAKE_C_COMPILER gcc)
-set(CMAKE_CXX_COMPILER g++)
+# set(CMAKE_C_COMPILER gcc)
+# set(CMAKE_CXX_COMPILER g++)
 ADD_DEFINITIONS(-D_LIBCPP_VERSION=1) # tbb clang compatibility
 else()
 set(CMAKE_C_COMPILER gcc)
@@ -76,11 +79,11 @@ ENDIF(AUTOVECTORIZE)
 
 
 # Download and unpack googletest at configure time
-configure_file(3rdparty/GTest.CMakeLists.txt googletest-download/CMakeLists.txt)
-execute_process(COMMAND "${CMAKE_COMMAND}" -G "${CMAKE_GENERATOR}" .
-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/googletest-download" )
-execute_process(COMMAND "${CMAKE_COMMAND}" --build .
-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/googletest-download" )
+# configure_file(3rdparty/GTest.CMakeLists.txt googletest-download/CMakeLists.txt)
+# execute_process(COMMAND "${CMAKE_COMMAND}" -G "${CMAKE_GENERATOR}" .
+#     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/googletest-download" )
+# execute_process(COMMAND "${CMAKE_COMMAND}" --build .
+#     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/googletest-download" )
 
 # Prevent GoogleTest from overriding our compiler/linker options
 # when building with Visual Studio
@@ -89,8 +92,8 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 # Add googletest directly to our build. This adds
 # the following targets: gtest, gtest_main, gmock
 # and gmock_main
-add_subdirectory("${CMAKE_BINARY_DIR}/googletest-src"
-                 "${CMAKE_BINARY_DIR}/googletest-build")
+# add_subdirectory("${CMAKE_BINARY_DIR}/googletest-src"
+#                  "${CMAKE_BINARY_DIR}/googletest-build")
 
 # The gtest/gmock targets carry header search path
 # dependencies automatically when using CMake 2.8.11 or
@@ -103,7 +106,6 @@ endif()
 # Now simply link your own targets against gtest, gmock,
 # etc. as appropriate
 
-project(exec_engine_comparison)
 
 IF(DATADIR)
     message(STATUS "setting datadir to user defined")
@@ -117,8 +119,8 @@ ELSE(DATADIR)
 ENDIF(DATADIR)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/3rdparty/")
-find_package(TBB)
-include_directories(${TBB_INCLUDE_DIRS})
+# find_package(TBB)
+# include_directories(${TBB_INCLUDE_DIRS})
 
 
 IF(LINUX)
